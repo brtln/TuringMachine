@@ -62,11 +62,12 @@ public class TuringMachine {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        char bandArr[] = bandString.toCharArray();
+        char[] bandArr = bandString.toCharArray();
         this.band = new ArrayList<String>();
-        for(int i=0; i<bandArr.length;i++){
-            band.add(String.valueOf(bandArr[i]));
+        for (char c : bandArr) {
+            band.add(String.valueOf(c));
         }
+
         for(int i=0; i<=20;i++){
             band.add(this.leerzeichen);
         }
@@ -84,7 +85,7 @@ public class TuringMachine {
         }
     }
 
-    public void leseUebergangsfunktionen(){
+    void leseUebergangsfunktionen() throws IOException{
 
         while(!band.get(position).equals("1") || !band.get(position+1).equals("1") || !band.get(position+2).equals("1")){
             if(band.get(position).equals("1") && band.get(position+1).equals("1")){
@@ -111,11 +112,13 @@ public class TuringMachine {
         }
 
         // skip 111
-        for(int i=0;i<3;i++){bewegeLesekopf("00");}
+        for (int i = 0; i < 3; i++){
+            bewegeLesekopf("00");
+        }
 
     }
 
-    public void printUebergangsfunktionen(){
+    void printUebergangsfunktionen(){
         System.out.println("------------------------------------------------");
         uebergangsfunktionen.forEach((K, V) -> System.out.println(
                   "Zustand: "+K.getZustand()+" \t"
@@ -127,7 +130,7 @@ public class TuringMachine {
         System.out.println("------------------------------------------------");
     }
 
-    public void startTM(){
+    void startTM() throws IOException{
         if(stepMode == 2){
             stepMode = 1;
         }
@@ -142,10 +145,11 @@ public class TuringMachine {
             aktuellerZustand.setZustand(uf.getUebergangsZustand());
             aktuellerZustand.setEingabe(band.get(position));
         }
-        if(endZustaende.contains(aktuellerZustand.getZustand())){
+
+        if (endZustaende.contains(aktuellerZustand.getZustand())){
             System.out.println("\nAkzeptierender Zustand Q("+aktuellerZustand.getZustand().length()+")");
             printResultat();
-        }else{
+        } else {
             System.out.println("\nVerwerfender Zustand Q("+aktuellerZustand.getZustand().length()+")");
         }
         printTM();
@@ -201,20 +205,16 @@ public class TuringMachine {
         System.out.println("Nullen gezählt: "+nullZaehler);
     }
 
-    private void bewegeLesekopf(String richtung){
+    private void bewegeLesekopf(String richtung) throws IOException {
         this.position += richtungen.get(richtung);
         this.schritte++;
-        if(stepMode == 1) {
-            try {
-                System.in.read();
-            } catch (Exception e) {
-
-            }
+        if (stepMode == 1) {
+            System.in.read();
         }
         printTM();
     }
 
-    private String getNaechstenCode(){
+    private String getNaechstenCode() throws IOException{
         StringBuilder code = new StringBuilder();
         while(!band.get(position).equals("1")){
             code.append(band.get(position));
