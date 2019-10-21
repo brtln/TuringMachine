@@ -5,26 +5,28 @@ public class Zustand {
     private String zustand;
     private String eingabe;
 
-    public Zustand(){}
+    Zustand() {
 
-    public Zustand(String zustand, String eingabe){
+    }
+
+    Zustand(String zustand, String eingabe){
         this.zustand = zustand;
         this.eingabe = eingabe;
     }
 
-    public String getZustand() {
+    String getZustand() {
         return zustand;
     }
 
-    public void setZustand(String zustand) {
+    void setZustand(String zustand) {
         this.zustand = zustand;
     }
 
-    public String getEingabe() {
+    String getEingabe() {
         return eingabe;
     }
 
-    public void setEingabe(String eingabe) {
+    void setEingabe(String eingabe) {
         this.eingabe = eingabe;
     }
 
@@ -35,10 +37,7 @@ public class Zustand {
 
     @Override
     public boolean equals(Object key){
-        if(key.hashCode()==this.hashCode()){
-            return true;
-        }
-        return false;
+        return key.hashCode() == this.hashCode();
     }
 
 
